@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:ok_delivery/screens/registration.dart';
+import 'package:ok_delivery/utils/style.dart';
 
 class OnBoardingPage extends StatefulWidget {
   const OnBoardingPage({super.key});
@@ -53,7 +54,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
         height: 60,
         child: ElevatedButton(
           style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.red)),
+              backgroundColor: MaterialStateProperty.all(primaryColor)),
           child: const Text(
             'Let\'s go right away!',
             style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
@@ -65,13 +66,13 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
         PageViewModel(
           title: "Welcome to a world of new possibilities!",
           body: "Get what you need, when you need it.",
-          image: _buildImage('Dream_jobs.jpg'),
+          image: _buildImage('delivery_one.jpg'),
           decoration: pageDecoration,
         ),
         PageViewModel(
           title: "Get your items when you need them.",
           body: "Fast, easy, and secure delivery at your fingertips.",
-          image: _buildImage('opportunities.jpg'),
+          image: _buildImage('delivery_two.jpg'),
           decoration: pageDecoration,
         ),
         PageViewModel(
@@ -83,7 +84,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
             bodyAlignment: Alignment.bottomCenter,
             imageAlignment: Alignment.topCenter,
           ),
-          image: _buildImage('productivity.jpg'),
+          image: _buildImage('delivery_three.jpg'),
           reverse: true,
         ),
       ],
@@ -96,13 +97,13 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       //rtl: true, // Display as right-to-left
       back: const Icon(
         Icons.arrow_back,
-        color: Colors.red,
+        color: primaryColor,
       ),
       skip: const Text('Skip',
-          style: TextStyle(fontWeight: FontWeight.w600, color: Colors.red)),
-      next: const Icon(Icons.arrow_forward, color: Colors.red),
+          style: TextStyle(fontWeight: FontWeight.w600, color: primaryColor)),
+      next: const Icon(Icons.arrow_forward, color: primaryColor),
       done: const Text('Done',
-          style: TextStyle(fontWeight: FontWeight.w600, color: Colors.red)),
+          style: TextStyle(fontWeight: FontWeight.w600, color: primaryColor)),
       curve: Curves.bounceIn, //Curves.fastLinearToSlowEaseIn,
       controlsMargin: const EdgeInsets.all(16),
       controlsPadding: kIsWeb
@@ -115,7 +116,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
         activeShape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(25.0)),
         ),
-        activeColor: Colors.red,
+        activeColor: primaryColor,
       ),
       dotsContainerDecorator: const ShapeDecoration(
         color: Color.fromARGB(221, 58, 56, 56),
