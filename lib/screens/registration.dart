@@ -82,13 +82,48 @@ class _RegistrationState extends State<Registration> {
                             ),
                           ),
                           const SizedBox(height: 5.0),
+                          // Padding(
+                          //   padding: const EdgeInsets.all(16.0),
+                          //   child: ElevatedButton(
+
+                          //     onPressed: _agreedToContinue!
+                          //         ? _continueButtonPressed
+                          //         : null,
+                          //     child: const Text('Continue'),
+                          //   ),
+                          // ),
+
                           Padding(
-                            padding: const EdgeInsets.all(16.0),
+                            padding: EdgeInsets.symmetric(horizontal: 20.0),
+                            // ignore: deprecated_member_use
                             child: ElevatedButton(
-                              onPressed: _agreedToContinue!
-                                  ? _continueButtonPressed
-                                  : null,
-                              child: const Text('Continue'),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.red[600],
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(17.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: const [
+                                    Text(
+                                      "Continue",
+                                      style: TextStyle(
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    ),
+                                    Icon(
+                                      Icons.arrow_right,
+                                      color: Colors.black,
+                                      size: 26.0,
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
                           const SizedBox(
