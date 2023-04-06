@@ -6,7 +6,7 @@ class CustomColor {
   static const Color customIconColorOne = Color(0xFFFFFFFF);
   static const Color customIconColorTwo = Color(0xFF707070);
 
-  static const Color primaryColor = Color(0xFF774280);
+  static const Color primaryColor = Color.fromARGB(255, 209, 22, 31);
   static const Color secondaryColor = Color(0xFF707070);
   static const Color screenBGColor = Color(0xFFEEEEEE);
   static const Color gradientColorStart = Color(0xFF774280);
