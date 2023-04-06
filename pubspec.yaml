@@ -50,9 +50,13 @@ dev_dependencies:
   flutter_native_splash: ^2.2.19
   font_awesome_flutter: ^10.4.0
   google_maps_flutter: ^2.2.5
+  permission_handler: ^10.2.0
+  geolocator:
   pin_code_fields: ^7.4.0
   get: ^4.6.5
-  flutter_screenutil: ^5.7.0 
+  flutter_screenutil: ^5.7.0
+  modal_bottom_sheet: ^3.0.0-pre
+  google_fonts: ^4.0.3
 
 flutter_native_splash:
   image: assets/images/launcher.png
