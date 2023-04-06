@@ -14,7 +14,7 @@ class Strings {
   static const String password = 'Password';
   static const String forgotPasswordButtonText = 'Forgot Password?';
   static const String signin = 'Sign in';
-  static const String newtocarbo = 'New to $appName? ';
+  static const String newtoOkDelivery = 'New to $appName? '; // newto carbo
   static const String signup = 'Sign up';
 
   //? Signin With Phone Number Screen
@@ -24,7 +24,7 @@ class Strings {
   static const String terms = '\nTerms and Conditions ';
   static const String and = 'and ';
   static const String privacyPolicy = 'Privacy Policy ';
-  static const String ofcarbo = 'of Ok delivery ';
+  static const String ofOkDelivery = 'of Ok delivery '; //of carbo
   static const String phoneHint = '1XXXXXXXXXX';
 
   //? OTP Screen
