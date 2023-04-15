@@ -1,22 +1,23 @@
 import 'package:get/get.dart';
+import 'package:ok_delivery/controller/user_state.dart';
 import 'package:ok_delivery/model/searching_ride_binding.dart';
 import 'package:ok_delivery/model/splash_binding.dart';
 import 'package:ok_delivery/screens/auth/sign_in/sign_in_screen.dart';
-// import 'package:ok_delivery/screens/home/add_card_screen.dart';
-// import 'package:ok_delivery/screens/home/available_driver_screen.dart';
-// import 'package:ok_delivery/screens/home/cancel_trip_screen.dart';
-// import 'package:ok_delivery/screens/home/chatting_screen.dart';
+import 'package:ok_delivery/screens/home/add_card_screen.dart';
+import 'package:ok_delivery/screens/home/available_driver_screen.dart';
+import 'package:ok_delivery/screens/home/cancel_trip_screen.dart';
+import 'package:ok_delivery/screens/home/chatting_screen.dart';
 import 'package:ok_delivery/screens/home/destination_screen.dart';
 import 'package:ok_delivery/screens/drawer/drawer_menu_screen.dart';
 import 'package:ok_delivery/screens/home/home_screen.dart';
-// import 'package:ok_delivery/screens/home/location_screen.dart';
-// import 'package:ok_delivery/screens/home/payment_method_screen.dart';
+import 'package:ok_delivery/screens/home/location_screen.dart';
+import 'package:ok_delivery/screens/home/payment_method_screen.dart';
 import 'package:ok_delivery/screens/home/pickup_screen.dart';
 // import 'package:ok_delivery/screens/profile/profile_screen.dart';
-// import 'package:ok_delivery/screens/home/rate_driver_screen.dart';
-// import 'package:ok_delivery/screens/home/ride_history_screen.dart';
-// import 'package:ok_delivery/screens/home/searching_ride_screen.dart';
-// import 'package:ok_delivery/screens/home/send_request_screen.dart';
+import 'package:ok_delivery/screens/home/rate_driver_screen.dart';
+import 'package:ok_delivery/screens/home/ride_history_screen.dart';
+import 'package:ok_delivery/screens/home/searching_ride_screen.dart';
+import 'package:ok_delivery/screens/home/send_request_screen.dart';
 import 'package:ok_delivery/screens/home/set_destination_screen.dart';
 import 'package:ok_delivery/screens/home/set_pickup_location_screen.dart';
 // import 'package:ok_delivery/screens/onboard/onboard.dart';
@@ -26,10 +27,10 @@ import 'package:ok_delivery/screens/forgot_password/reset_password_screen.dart';
 import 'package:ok_delivery/screens/auth/sign_in/signin_with_phone_screen.dart';
 import 'package:ok_delivery/screens/introduction_screen.dart';
 import '../screens/auth/otp/otp_screen.dart';
-//import '../screens/auth/signup/signup_screen.dart';
+// import '../screens/auth/signup/signup_screen.dart';
 
 class Routes {
-  static const String splashScreen = '/splashScreen';
+  static const String userState = '/userState';
   static const String onboardScreen = '/onBoardScreen';
   static const String signInScreen = '/signInScreen';
   static const String signInWithPhoneScreen = '/signInWithPhoneScreen';
@@ -57,8 +58,8 @@ class Routes {
 
   static var list = [
     GetPage(
-      name: splashScreen,
-      page: () => HomeScreen(), //const SplashScreen(),
+      name: userState,
+      page: () => const UserState(), //const SplashScreen(),
       binding: SplashBinding(),
     ),
     GetPage(
@@ -95,7 +96,7 @@ class Routes {
     ),
     GetPage(
       name: locationScreen,
-      page: () => HomeScreen(), //LocationScreen(),
+      page: () => LocationScreen(),
     ),
     GetPage(
       name: setPickupLocationScreen,
@@ -115,36 +116,36 @@ class Routes {
     ),
     GetPage(
       name: sendRequestScreen,
-      page: () => HomeScreen(), //SendRequestScreen(),
+      page: () => SendRequestScreen(),
     ),
     GetPage(
       name: searchRideScreen,
-      page: () => HomeScreen(), //const SearchingRideScreen(),
+      page: () => const SearchingRideScreen(),
       binding: SearchingRideBinding(),
     ),
     GetPage(
       name: availableDriverScreen,
-      page: () => HomeScreen(), //const AvailableDrivercreen(),
+      page: () => const AvailableDrivercreen(),
     ),
     GetPage(
       name: paymentMethodScreen,
-      page: () => HomeScreen(), //PaymentMethodScreen(),
+      page: () => PaymentMethodScreen(),
     ),
     GetPage(
       name: addCardScreen,
-      page: () => HomeScreen(), //AddCardScreen(),
+      page: () => AddCardScreen(),
     ),
     GetPage(
       name: chattingScreen,
-      page: () => HomeScreen(), // ChattingScreen(),
+      page: () => ChattingScreen(),
     ),
     GetPage(
       name: cancelTripScreen,
-      page: () => HomeScreen(), //CancelTripScreen(),
+      page: () => CancelTripScreen(),
     ),
     GetPage(
       name: rateDriverScreen,
-      page: () => HomeScreen(), //RateDriverScreen(),
+      page: () => RateDriverScreen(),
     ),
     GetPage(
       name: customDrawerMenuScreen,
@@ -156,7 +157,7 @@ class Routes {
     ),
     GetPage(
       name: rideHistoryScreen,
-      page: () => HomeScreen(), //const RideHistoryScreen(),
+      page: () => const RideHistoryScreen(),
     ),
   ];
 }
