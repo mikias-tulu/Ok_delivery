@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:ok_delivery/screens/home/home_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:ok_delivery/providers/map_provider.dart';
 
@@ -32,6 +33,7 @@ class _MapScreenState extends State<MapScreen> {
     return Consumer<MapProvider>(
       builder: (BuildContext context, MapProvider mapProvider, _) {
         return Scaffold(
+          resizeToAvoidBottomInset: false,
           key: scaffoldKey,
           body: SafeArea(
             child: Stack(
