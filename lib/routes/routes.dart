@@ -26,6 +26,7 @@ import 'package:ok_delivery/screens/forgot_password/forgot_password_screen.dart'
 import 'package:ok_delivery/screens/forgot_password/reset_password_screen.dart';
 import 'package:ok_delivery/screens/auth/sign_in/signin_with_phone_screen.dart';
 import 'package:ok_delivery/screens/introduction_screen.dart';
+import 'package:ok_delivery/screens/map_screen/confirm_pickup.dart';
 import '../screens/auth/otp/otp_screen.dart';
 // import '../screens/auth/signup/signup_screen.dart';
 
@@ -55,6 +56,7 @@ class Routes {
   static const String customDrawerMenuScreen = '/customDrawerMenuScreen';
   static const String profileScreen = '/profileScreen';
   static const String rideHistoryScreen = '/rideHistoryScreen';
+  static const String confirmPickupScreen = '/ConfirmPickup';
 
   static var list = [
     GetPage(
@@ -159,5 +161,12 @@ class Routes {
       name: rideHistoryScreen,
       page: () => const RideHistoryScreen(),
     ),
+
+    GetPage(
+      name: confirmPickupScreen,
+      page: () => const ConfirmPickup(),
+    ),
+
+    //ConfirmPickup
   ];
 }
