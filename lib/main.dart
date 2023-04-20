@@ -67,6 +67,12 @@ class MyApp extends StatelessWidget {
                 },
               ),
             ),
+            routes: {
+              UserState.route: (_) => const UserState(),
+              MapScreen.route: (_) => const MapScreen(),
+              LoginSignupScreen.route: (_) => const LoginSignupScreen(),
+              TripsScreen.route: (_) => const TripsScreen(),
+            },
           ),
         );
       }),

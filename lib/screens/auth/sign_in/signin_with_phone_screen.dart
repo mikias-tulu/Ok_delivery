@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:ok_delivery/routes/routes.dart';
+import 'package:ok_delivery/screens/auth/otp/otp_screen.dart';
 import 'package:ok_delivery/utils/custom_color.dart';
 import 'package:ok_delivery/utils/custom_style.dart';
 import 'package:ok_delivery/utils/dimensions.dart';
@@ -62,6 +63,7 @@ class SigninWithPhoneScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+          resizeToAvoidBottomInset: false,
           backgroundColor: CustomColor.screenBGColor,
           body: SingleChildScrollView(
             child: Column(
@@ -106,7 +108,9 @@ class SigninWithPhoneScreen extends StatelessWidget {
                     child: DefaultButton(
                       title: Strings.continueText,
                       onPresssed: () {
-                        Get.toNamed(Routes.otpScreen);
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                OtpScreen(phoneNumberController.text)));
                       },
                     ),
                   ),
