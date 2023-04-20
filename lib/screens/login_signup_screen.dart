@@ -24,10 +24,10 @@ class LoginSignupScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Icon(
-                  Icons.location_on_sharp,
-                  size: 100,
-                  color: Theme.of(context).primaryColor,
+                const Image(
+                  image: AssetImage('assets/images/okdelivery.jpg'),
+                  width: 200,
+                  height: 200,
                 ),
                 const SizedBox(height: 10),
                 Text(Strings.appName,
