@@ -23,12 +23,21 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
+  late MapProvider mapProvider;
+
   @override
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
     Provider.of<MapProvider>(context, listen: false).initializeMap(
       scaffoldKey: scaffoldKey,
     );
+
+    @override
+    void initState() {
+      super.initState();
+      mapProvider = MapProvider();
+      mapProvider.initializeMap();
+    }
 
     return Consumer<MapProvider>(
       builder: (BuildContext context, MapProvider mapProvider, _) {
@@ -51,9 +60,29 @@ class _MapScreenState extends State<MapScreen> {
                         polylines: mapProvider.polylines!,
                         padding: const EdgeInsets.only(bottom: 90),
                       )
-                    : const Center(
-                        child: CircularProgressIndicator(),
-                      ),
+                    : (mapProvider.deviceLocation != null
+                        ? GoogleMap(
+                            myLocationEnabled: true,
+                            myLocationButtonEnabled: true,
+                            zoomControlsEnabled: false,
+                            onMapCreated: mapProvider.onMapCreated,
+                            initialCameraPosition: CameraPosition(
+                              target: LatLng(
+                                mapProvider.deviceLocation!.latitude,
+                                mapProvider.deviceLocation!.longitude,
+                              ),
+                              zoom: 15,
+                            ),
+                            compassEnabled: true,
+                            onTap: mapProvider.onTap,
+                            markers: mapProvider.markers!,
+                            polylines: mapProvider.polylines!,
+                            padding: const EdgeInsets.only(bottom: 90),
+                          )
+                        : const Center(
+                            child: CircularProgressIndicator(),
+                          )),
+
                 ConfirmPickup(mapProvider: mapProvider),
                 SearchDriver(mapProvider: mapProvider),
                 DriverArriving(mapProvider: mapProvider),
