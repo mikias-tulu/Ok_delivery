@@ -78,7 +78,7 @@ class Routes {
     ),
     GetPage(
       name: otpScreen,
-      page: () => const OtpScreen(),
+      page: () => SignInScreen(), //OtpScreen(),
     ),
     GetPage(
       name: forgotPasswordScreen,
