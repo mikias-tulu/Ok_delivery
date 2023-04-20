@@ -71,8 +71,8 @@ class MapProvider with ChangeNotifier {
     _deviceAddress = null;
     _cost = null;
     _distance = null;
-    _cameraPos =
-        const CameraPosition(target: LatLng(8.9806, 38.7578), zoom: 15);
+    _cameraPos = null;
+    //CameraPosition(target: LatLng(8.9806, 38.7578), zoom: 15);
     _markers = {};
     _polylines = {};
     _ongoingTrip = null;
@@ -156,11 +156,21 @@ class MapProvider with ChangeNotifier {
       }
     }
 
-    if (deviceLocation == null) {
+    /* if (deviceLocation == null) {
       cameraLatLng = const LatLng(8.9806, 38.7578);
     }
-
-    setCameraPosition(cameraLatLng!);
+ */
+    if (cameraLatLng == null) {
+      if (deviceLocation != null) {
+        cameraLatLng = LatLng(
+          deviceLocation.latitude,
+          deviceLocation.longitude,
+        );
+      } else {
+        cameraLatLng = const LatLng(8.9806, 38.7578);
+      }
+    }
+    setCameraPosition(cameraLatLng);
 
     notifyListeners();
   }
