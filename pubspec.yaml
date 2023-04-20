@@ -52,6 +52,7 @@ dev_dependencies:
   geocoding: ^2.0.4
   flutter_polyline_points: ^1.0.0
   flutter_spinkit: ^5.1.0
+  pinput: ^2.2.31
 
 flutter_native_splash:
   image: assets/images/okdelivery.jpg
