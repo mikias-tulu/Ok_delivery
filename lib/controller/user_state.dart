@@ -13,6 +13,6 @@ class UserState extends StatelessWidget {
   Widget build(BuildContext context) {
     User? user = FirebaseAuth.instance.currentUser;
 
-    return user != null ? HomeScreen() : const LoginSignupScreen();
+    return user != null ? const HomeScreen() : const LoginSignupScreen();
   }
 }
