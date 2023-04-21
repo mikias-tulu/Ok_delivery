@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:ok_delivery/providers/map_provider.dart';
+import 'package:ok_delivery/screens/drawer/custom_side_drawer.dart';
+import 'package:ok_delivery/screens/map_screen.dart';
+import 'package:ok_delivery/screens/map_screen/floating_drawer_bar_button.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:ok_delivery/routes/routes.dart';
 import 'package:ok_delivery/utils/custom_color.dart';
@@ -16,33 +19,56 @@ import 'package:ok_delivery/widgets/buttons/default_button.dart';
 import 'package:ok_delivery/widgets/custom_appbar_with_menu.dart';
 import 'package:ok_delivery/widgets/input/default_input_text_field.dart';
 import 'package:ok_delivery/widgets/size.dart';
+import 'package:ok_delivery/providers/map_provider.dart';
+
+//search
+import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.dart';
+import 'package:google_api_headers/google_api_headers.dart';
+import 'package:google_maps_webservice/places.dart';
+import 'package:ok_delivery/config/map_api.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Position? currentPosition;
+  late MapProvider mapProvider = MapProvider();
+  @override
+  void initState() {
+    super.initState();
+    mapProvider = MapProvider();
+  }
+
+  /* Position? currentPosition;
   CameraPosition _initialPosition =
       CameraPosition(target: LatLng(8.9806, 38.7578), zoom: 15);
 
   late final GoogleMapController _mapController;
-  Set<Marker> _markers = {};
-
+  Set<Marker> _markers = {}; */
   final TextEditingController promoController = TextEditingController();
-  final TextEditingController pickupSearchController = TextEditingController();
-  final TextEditingController pickupSearchController2 = TextEditingController();
-  final GlobalKey<ScaffoldState> _key = GlobalKey();
 
-  void _onMapCreated(GoogleMapController controller) {
+  final TextEditingController pickupSearchController = TextEditingController();
+
+  final TextEditingController pickupSearchController2 = TextEditingController();
+
+  final GlobalKey<ScaffoldState> _scaffoldKeyTwo = GlobalKey();
+
+  /* void _onMapCreated(GoogleMapController controller) {
     _mapController = controller;
-  }
+  } */
+  String location = "Search Location";
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+    Provider.of<MapProvider>(context, listen: false).initializeMap(
+      scaffoldKey: scaffoldKey,
+    );
     Widget pointText(String text, String boldText) {
       return RichText(
         text: TextSpan(
@@ -226,31 +252,59 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return SafeArea(
       child: Scaffold(
-        key: _key,
-        drawer: const CustomDrawerMenuScreen(),
+        resizeToAvoidBottomInset: false,
+        key: _scaffoldKeyTwo,
+        drawer: const CustomSideDrawer(),
         body: Stack(
           children: [
-            GoogleMap(
+            const MapScreen(),
+            Positioned(
+              top: 30,
+              left: 30,
+              child: GestureDetector(
+                onTap: () {
+                  _scaffoldKeyTwo.currentState!.openDrawer();
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius: 6,
+                        spreadRadius: 2,
+                      )
+                    ],
+                  ),
+                  child:
+                      const Icon(Icons.menu, size: 26, color: Colors.black54),
+                ),
+              ),
+            ),
+
+            /* GoogleMap(
               // assign the initial camera position
               initialCameraPosition: _initialPosition,
               // assign the GoogleMapController
               onMapCreated: _onMapCreated,
               // assign the set of markers to be displayed on the map
               markers: _markers,
-            ),
-            CustomAppbarWithMenu(
+            ), */
+            /* CustomAppbarWithMenu(
               gapBetweenBackButtonAndTitle: 0,
               gapBetweenTitlAndAppbar: 0,
               title: "",
               onPress: () {
                 _key.currentState!.openDrawer();
               },
-            ),
+            ), */
             Positioned(
               bottom: 0,
               child: GestureDetector(
                 child: Container(
-                  height: 113.h,
+                  height: 190.h,
                   width: 414.w,
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -276,7 +330,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       addVerticalSpace(15.h),
-                      Padding(
+                      //orginal textbox
+                      /*  Padding(
                         padding: EdgeInsets.only(
                           left: 36.0.w,
                           right: 35.2.w,
@@ -293,14 +348,133 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                         ),
+                      ), */
+                      //SizedBox(height: 20.h),
+                      /* Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 36.0.w),
+                        child: SizedBox(
+                          width: 342.76.w,
+                          height: 55.h,
+                          child: DefaultButton(
+                            title: Strings.setDestination,
+                            onPresssed: () {
+                              Get.toNamed(Routes.setDestinationScreen);
+                            },
+                          ),
+                        ),
+                      ), */
+                      //search autoconplete input
+                      InkWell(
+                        onTap: () async {
+                          var place = await PlacesAutocomplete.show(
+                              context: context,
+                              apiKey: googleMapApi,
+                              mode: Mode.overlay,
+                              types: [],
+                              strictbounds: false,
+                              components: [Component(Component.country, 'et')],
+                              //google_map_webservice package
+                              onError: (err) {
+                                print(err);
+                              });
+
+                          if (place != null) {
+                            setState(() {
+                              location = place.description.toString();
+                            });
+
+                            //form google_maps_webservice package
+                            final plist = GoogleMapsPlaces(
+                              apiKey: googleMapApi,
+                              apiHeaders:
+                                  await const GoogleApiHeaders().getHeaders(),
+                              //from google_api_headers package
+                            );
+                            String placeid = place.placeId ?? "0";
+                            final detail =
+                                await plist.getDetailsByPlaceId(placeid);
+                            final geometry = detail.result.geometry!;
+                            final lat = geometry.location.lat;
+                            final lang = geometry.location.lng;
+                            var newlatlang = LatLng(lat, lang);
+
+                            //move map camera to selected place with animation
+
+                            mapProvider.animateCameraToPos(
+                              //CameraUpdate.newCameraPosition(
+                              // CameraPosition(target:
+                              newlatlang,
+                              15,
+
+                              //),
+                              //),
+                            );
+                          }
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            left: 36.0.w,
+                            right: 35.2.w,
+                          ),
+                          child: Card(
+                            child: Container(
+                              height: 55.h,
+                              margin: EdgeInsets.only(right: 17.w),
+                              decoration: BoxDecoration(
+                                color: Colors.black.withOpacity(0.05),
+                                borderRadius: BorderRadius.circular(
+                                    Dimensions.radius * 0.5),
+                              ),
+                              padding: const EdgeInsets.all(0),
+                              //width: MediaQuery.of(context).size.width - 40,
+                              child: ListTile(
+                                title: Text(
+                                  location,
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                                leading: Container(
+                                  width: 60.w,
+                                  height: 55.h,
+                                  // margin: EdgeInsets.only(right: 17.w),
+                                  decoration: BoxDecoration(
+                                    color: CustomColor.textInputIconBgColor,
+                                    borderRadius: BorderRadius.circular(
+                                        Dimensions.radius * 0.5),
+                                  ),
+                                  child: const Icon(
+                                    Icons.location_on,
+                                    color: CustomColor.primaryColor,
+                                  ),
+                                ),
+                                dense: true,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 20.h),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 36.0.w),
+                        child: SizedBox(
+                          width: 342.76.w,
+                          height: 55.h,
+                          child: DefaultButton(
+                            title: Strings.continuetext,
+                            onPresssed: () {
+                              Get.toNamed(Routes.destinationScreen);
+                            },
+                          ),
+                        ),
                       ),
                     ],
                   ),
                 ),
-                onTap: () => _openBottomSheetModal(context),
+                onTap: () {
+                  _openBottomSheetModal(context);
+                },
               ),
             ),
-            Positioned(
+            /* Positioned(
               bottom: 180.h,
               right: 21.w,
               child: SizedBox(
@@ -322,11 +496,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Icons.my_location,
                                 color: CustomColor.customIconColorTwo,
                               )
-                            : const CircularProgressIndicator(),
+                            : const Icon(
+                                Icons.my_location,
+                                color: Colors.red,
+                              ),
                   ),
                 ),
               ),
-            ),
+            ), */
             Positioned(
               bottom: 267.h,
               right: 21.w,
@@ -356,7 +533,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: const CircleAvatar(
                     backgroundColor: Colors.white,
                     child: Icon(
-                      Icons.security,
+                      Icons.wallet_outlined,
                       color: CustomColor.primaryColor,
                     ),
                   ),
@@ -370,7 +547,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   _openBottomSheetModal(BuildContext context) {
-    return showModalBottomSheet(
+    return showCupertinoModalBottomSheet(
       //expand: false,
       context: context,
       backgroundColor: Colors.transparent,
@@ -471,67 +648,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             SizedBox(height: 20.h),
           ],
-        ),
-      ),
-    );
-  }
-
-  void _getCurrentLocation(BuildContext context) async {
-    LocationPermission permission;
-
-    // check if permission is granted
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      // request permission if not granted
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        // show dialog or snackbar to inform user to grant permission
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('Location Permission Required'),
-              content: Text('Please grant permission to access your location'),
-              actions: <Widget>[
-                ElevatedButton(
-                  child: Text('OK'),
-                  onPressed: () => Navigator.of(context).pop(),
-                ),
-              ],
-            );
-          },
-        );
-        return;
-      }
-    }
-
-    // get current location
-    currentPosition = await Geolocator.getCurrentPosition();
-    // handle location data
-    print(
-        'Latitude: ${currentPosition!.latitude}, Longitude: ${currentPosition!.longitude}');
-
-    setState(() {
-      _markers.add(
-        Marker(
-          markerId: const MarkerId('current'),
-          position: LatLng(
-            currentPosition!.latitude,
-            currentPosition!.longitude,
-          ),
-          infoWindow: const InfoWindow(title: 'Current Location'),
-        ),
-      );
-    });
-    // move the camera to the user's location
-    _mapController.animateCamera(
-      CameraUpdate.newCameraPosition(
-        CameraPosition(
-          target: LatLng(
-            currentPosition!.latitude,
-            currentPosition!.longitude,
-          ),
-          zoom: 15,
         ),
       ),
     );
