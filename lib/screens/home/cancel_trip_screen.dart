@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:ok_delivery/routes/routes.dart';
 import 'package:ok_delivery/utils/custom_color.dart';
 import 'package:ok_delivery/utils/custom_style.dart';
 import 'package:ok_delivery/utils/strings.dart';
@@ -163,7 +164,11 @@ class CancelTripScreen extends StatelessWidget {
               SizedBox(
                 width: 342.76.w,
                 height: 55.h,
-                child: DefaultButton(title: Strings.done, onPresssed: () {}),
+                child: DefaultButton(
+                    title: Strings.done,
+                    onPresssed: () {
+                      Get.toNamed(Routes.rateDriverScreen);
+                    }),
               ),
             ],
           )),
